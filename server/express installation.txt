@@ -1,0 +1,3 @@
+npm i express cors mongoose multer @aws-sdk/client-S3 dotenv @aws-sdk/s3-request-presigner
+npm i nodemon -D
+

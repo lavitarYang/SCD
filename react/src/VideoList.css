@@ -1,10 +1,9 @@
 .list{
     display: flex;
-    flex-wrap: wrap;
+    flex-direction:column;
     box-sizing: border-box;
-    /* margin: 10px 3% 10px 3%; */
-    border: 1px solid;
-    height: 100px;
+border: rgba(red, green, blue, alpha) solid;
+    height: 550px;
     overflow-y: scroll;
-    background-color: rgb(242, 239, 235);
+    background-color: beige;
 }

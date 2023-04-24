@@ -5,8 +5,8 @@ export default function NavBar(){
     return(
         <nav>
           <ul>
-            <li><Link to="/">home</Link></li>
-            <li><Link to="/upload">upload</Link></li>
+            <li><Link to="/">Home</Link></li>
+            <li><Link to="/upload">Upload</Link></li>
           </ul>
         </nav>
     );

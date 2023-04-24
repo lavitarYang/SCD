@@ -107,32 +107,17 @@ app.get("/get/video/:id",async(req,res)=>{
         res.status(500).json("not avaliable");
     }
 });
+app.patch('/submit/:id',async(req,res)=>{
+    const {id} = req.params;
+    const data = req.body;
+    const request = await description.findOneAndUpdate({ID:id},{commentTwo:`${data.inputText}`});
+    res.status(200).json("good")
+    console.log(data.inputText)
+    console.log("id",{id})
+})
 mongoose.connect(mongoDBKey)
 .then(()=>{
     console.log("connect to mongoDB");
     app.listen(4000,()=>{console.log("server is started at 4000")});
 })
 
-
-
-// app.get('/api',async(req,res)=>{
-//     try {
-//         const KEYS = await awsKey.find({});
-//         const videoList = [];
-//         for (const KEY of  KEYS){
-//             const query = new GetObjectCommand({
-//                 Bucket:bucketName,
-//                 Key:KEY.awsKey
-//             })
-//             const url = await getSignedUrl(s3,query,{expiresIn:3600});
-//             videoList.push[url]
-//             console.log(url)
-//         }
-//         Id=KEYS.length;
-//         console.log(Id);
-//         res.status(200).json(KEYS);
-//     } catch (error) {
-//         console.log(error.message);
-//         res.status(500).json("not avaliable");
-//     }
-// })

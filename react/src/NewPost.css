@@ -1,0 +1,10 @@
+form{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+input,
+button{
+    margin: 5rem 0;
+}
