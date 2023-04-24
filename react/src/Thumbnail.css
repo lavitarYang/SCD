@@ -1,0 +1,14 @@
+.VideoButton{
+    display: flex;
+    background: blue;
+    margin: 10px 20px 10px 20px;
+    height: 75px;
+    width: 75px;
+    border-radius : 25px;
+    /* border: solid ; */
+}
+.Child{
+    height: inherit;
+    width: inherit;
+    border-radius : inherit;
+}

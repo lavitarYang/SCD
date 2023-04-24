@@ -1,0 +1,31 @@
+.topimage{
+  display: flex;
+  width: 100%;
+  height: 20rem;
+  background-color: blueviolet;
+  background-image: linear-gradient(to bottom right, rgba(255, 0, 255, 0), rgb(0, 0, 255));
+  align-items: center;
+  justify-content: center;
+}
+.glow{
+  font-size: 3rem;
+  text-align: center;
+  color: #fff;
+  text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #0af, 0 0 70px #0af, 0 0 80px #0af, 0 0 100px #0af, 0 0 150px #0af;
+  animation: glow 1.5s ease-in-out infinite;
+}
+@keyframes glow {
+  0% {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #0af, 0 0 70px #0af, 0 0 80px #0af, 0 0 100px #0af, 0 0 150px #0af;
+  }
+  50% {
+    text-shadow: 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #0af, 0 0 70px #0af, 0 0 80px #0af, 0 0 100px #0af, 0 0 150px #0af, 0 0 180px #0af;
+  }
+  100% {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #0af, 0 0 70px #0af, 0 0 80px #0af, 0 0 100px #0af, 0 0 150px #0af;
+  }
+}
+.storage{
+  background-image: linear-gradient(to bottom right, rgb(3, 1, 8), rgb(27, 4, 21));
+  margin-top: 0;
+}

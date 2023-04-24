@@ -1,0 +1,10 @@
+.list{
+    display: flex;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+    /* margin: 10px 3% 10px 3%; */
+    border: 1px solid;
+    height: 100px;
+    overflow-y: scroll;
+    background-color: rgb(242, 239, 235);
+}

@@ -1,0 +1,32 @@
+.container{
+    display: flex;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+    width: 90%;
+    margin: 10px 5% 10px 5%;
+    border: 1px solid;
+    border-radius: 25px;
+    background-color: beige;
+}
+.Thum{
+    flex-basis: 15%;
+    flex-grow: 1;
+}
+.detail{
+    border: solid blue;
+    height: 50px;
+    flex-basis: 75%;
+    flex-grow: 1;
+    overflow-y: scroll;
+}
+.detail > *{
+    margin: 0%;
+}
+.detail >h3{
+    padding-top: 5px;
+}
+.detail{
+    margin-top: 25px;
+    margin-bottom: 12.5px;
+    margin-right: 10px;
+}

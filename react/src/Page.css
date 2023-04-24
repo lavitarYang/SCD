@@ -1,0 +1,74 @@
+.PageContainer{
+  display: flex;
+  flex-direction: column;
+  border-radius: 5%;
+  margin-left: 10px;
+  margin-right: 10px;
+  border: #111 solid;
+  height: 50rem;
+}
+.WatchSection{
+  display: flex;
+  /* flex-wrap: wrap; */
+  width: 100%;
+  height: 50%;
+  border: #c02020 solid 2px;
+}
+.Player{
+  display: flex;
+  width: 75%;
+  height: 100%;
+  box-sizing: border-box;
+  border: #0af solid; 
+}
+.RightColumn{
+  display: flex;
+  flex-direction: column;
+  width: 25%;
+  height: 100%;
+  box-sizing: border-box;
+  border: rgb(6, 6, 6) solid 3px; 
+}
+.Description{
+  display: flex;
+  width: 100%;
+  height: 50%;
+  box-sizing: border-box;
+  border: rgb(0, 255, 60) solid; 
+}
+.TimeStemp{
+  display: flex;
+  width: 100%;
+  height: 50%;
+  box-sizing: border-box;
+  border: rgb(255, 0, 212) solid; 
+}
+.PenSection{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 50%;
+  box-sizing: border-box;
+  border: rgb(255, 255, 0) solid;
+}
+.Moderator{
+  display: flex;
+  width: 100%;
+  height: 50%;
+  box-sizing: border-box;
+  border: rgb(255, 64, 0) solid;
+  overflow-y: scroll;
+}
+.Administration{
+  display: flex;
+  width: 100%;
+  height: 50%;
+  box-sizing: border-box;
+  border: rgb(0, 255, 242) solid;
+  overflow-y: scroll;
+}
+.ReactPlayer{
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
