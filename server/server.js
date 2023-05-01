@@ -35,9 +35,15 @@ app.use(
 //backend temporary storage
 const storage = multer.memoryStorage(); //create storage
 const upload = multer({storage:storage}) //uploade function
-//basic api old one 
-//it was for devserver test if cross origine request is fine
-//to do create new one for loading video list for main page
+
+//production mode
+const path = require('path');
+app.use(express.static(path.join(__dirname, 'dist')));
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist/index.html'));
+});
+//production mode
+
 app.get('/api',async(req,res)=>{
     try {
         const KEYS = await awsKey.find({});

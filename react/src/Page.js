@@ -59,7 +59,7 @@ export default function Page(){
               </form>
             </div>
             <div className='Administration '>
-               {cospondVideo.commentTwo}
+              {cospondVideo.commentTwo}  
             </div>
           </div>
   

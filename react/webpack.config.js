@@ -23,6 +23,9 @@ module.exports={
             },
             '/get/video/*':{
                 target: 'http://localhost:4000',
+            },
+            '/submit/*':{
+                target: 'http://localhost:4000',
             }
         },
         webSocketServer: {
