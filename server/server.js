@@ -34,7 +34,16 @@ app.use(
 )
 //backend temporary storage
 //to do try if I can access video in mid
-const storage = multer.memoryStorage(); //create storage
+// const storage = multer.memoryStorage(); //create storage
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './video')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname)
+  }
+})
 const upload = multer({storage:storage}) //uploade function
 //ffmpeg
 const ffmpeg = require('fluent-ffmpeg');
@@ -88,19 +97,20 @@ app.post('/api',async(req,res)=>{
     }
 })
 // POST to s3
+
 app.post("/post/video",upload.single('video'),async(req,res)=>{
     //middleware upload.single('video')
-    const AWSKEY = randomDataName();
-    const params = {
-        Bucket:bucketName,
-        Key:AWSKEY,
-        Body:req.file.buffer,
-        ContentType:req.file.mimetype,
-    };
-    const command = new PutObjectCommand(params);
-    await s3.send(command);
-    await awsKey.create({awsKey:AWSKEY,ID:Id})
-    await description.create({ID:Id});
+    // const AWSKEY = randomDataName();
+    // const params = {
+    //     Bucket:bucketName,
+    //     Key:AWSKEY,
+    //     Body:req.file.buffer,
+    //     ContentType:req.file.mimetype,
+    // };
+    // const command = new PutObjectCommand(params);
+    // await s3.send(command);
+    // await awsKey.create({awsKey:AWSKEY,ID:Id})
+    // await description.create({ID:Id});
 
     res.status(200);
 });
