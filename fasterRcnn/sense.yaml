@@ -1,0 +1,17 @@
+# Images and labels direcotry should be relative to train.py
+TRAIN_DIR_IMAGES: 'data/sense/dataset/train'
+TRAIN_DIR_LABELS: 'data/sense/dataset/train'
+VALID_DIR_IMAGES: 'data/sense/dataset/test'
+VALID_DIR_LABELS: 'data/sense/dataset/test'
+
+# Class names.
+CLASSES: [
+    '__background__',
+    'boobs', 'butt'
+]
+
+# Number of classes (object classes + 1 for background class in Faster RCNN).
+NC: 3
+
+# Whether to save the predictions of the validation set while training.
+SAVE_VALID_PREDICTION_IMAGES: True
