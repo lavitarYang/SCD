@@ -69,10 +69,7 @@ app.get('/', (req, res) => {
       res.sendFile(path.join(__dirname, 'dist/index.html'));
     });
 // production mode
-// develope stage useless code
-// app.get('/*', (req, res) => {
-//     res.sendFile(path.join(__dirname,'../react/src', 'index.html'));
-// });
+
 
 app.get('/api',async(req,res)=>{
     try {

@@ -78,7 +78,7 @@ def main(args):
     cap, frame_width, frame_height = read_return_video_data(VIDEO_PATH)
     save_name = VIDEO_PATH.split(os.path.sep)[-1].split('.')[0]
     print(save_name)
-    out = cv2.VideoWriter(f"{'.'}/{save_name}.mp4", cv2.VideoWriter_fourcc(*'mp4v'), 30, (frame_width, frame_height))
+    out = cv2.VideoWriter(f"{'../server/video/output'}/{save_name}.mp4", cv2.VideoWriter_fourcc(*'mp4v'), 30, (frame_width, frame_height))
     RESIZE_TO = (frame_width, frame_height)
     frame_count = 0 # To count total frames.
     total_fps = 0 # To get the final frames per second.
@@ -155,7 +155,7 @@ def main(args):
     #write timeline json for front end
     TIMDICT.pop('__background__')
     json_data = json.dumps(TIMDICT)
-    with open(f"{'.'}/{save_name}.json", 'w') as f:
+    with open(f"{'../server/video/output'}/{save_name}.json", 'w') as f:
       f.write(json_data)
     
     #close all frames and video windows 
