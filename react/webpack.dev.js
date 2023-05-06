@@ -5,6 +5,13 @@ module.exports=merge(common,{
     mode:"development",
     output:{
         filename:'main.js',
-        path:path.resolve(__dirname,"dev")
+        path:path.resolve(__dirname,"dev"),
+        // mimeTypes: {
+        //     'text/html': ['html'],
+        //     'text/javascript': ['js']
+        //   }
+    },
+    devServer:{
+        historyApiFallback:true
     }
 });

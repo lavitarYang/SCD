@@ -6,7 +6,6 @@ import NavBar from "./NavBar";
 export default function Page(){
     const {id} = useParams();
     const [cospondVideo,setcospondVideo] = useState([])
-    const [outputText, setOutputText] = useState('');
     useEffect(() => {
       fetch(`/get/video/${id}`)
       .then(response => response.json())

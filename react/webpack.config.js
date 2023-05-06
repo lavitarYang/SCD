@@ -4,7 +4,9 @@ module.exports={
     entry:"./src/index.js",
     plugins:[
         new HTMLWebpackPlugin({
-            template: './src/index.html'
+            template: './src/index.html',
+            scriptLoading: 'defer',
+            inject :'body',
         })
     ],
     devServer: {

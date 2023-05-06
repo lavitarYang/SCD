@@ -33,16 +33,37 @@ app.use(
     cors({origin:"http://localhost:8080"})
 )
 //backend temporary storage
+//to do try if I can access video in mid
 const storage = multer.memoryStorage(); //create storage
 const upload = multer({storage:storage}) //uploade function
+//ffmpeg
+const ffmpeg = require('fluent-ffmpeg');
+const inputPath = './tmp/failvcodec.mp4';
+const outputPath = './tmp/output.mp4';
+//test on static resource
+// ffmpeg(inputPath)
+//   .videoCodec('libx264')  // vcodec h264
+//   .outputOptions('-crf 20')  // video quality
+//   .on('error', (err) => {
+//     console.log(`An error occurred: ${err.message}`);
+//   })
+//   .on('end', () => {
+//     console.log('Transcoding succeeded !');
+//   })
+//   .save(outputPath);
 
 //production mode
 const path = require('path');
-app.use(express.static(path.join(__dirname, 'dist')));
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist/index.html'));
-});
+
+// app.use(express.static(path.join(__dirname, 'dist')));
+// app.get('/', (req, res) => {
+    //   res.sendFile(path.join(__dirname, 'dist/index.html'));
+    // });
 //production mode
+//develope stage useless code
+// app.get('/*', (req, res) => {
+//     res.sendFile(path.join(__dirname,'../react/src', 'index.html'));
+// });
 
 app.get('/api',async(req,res)=>{
     try {
