@@ -1,6 +1,5 @@
 node_modules
 .env
-dist
 .mp4
 tmp
 video

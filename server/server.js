@@ -64,12 +64,12 @@ const outputPath = './tmp/output.mp4';
 //production mode
 const path = require('path');
 
-// app.use(express.static(path.join(__dirname, 'dist')));
-// app.get('/', (req, res) => {
-    //   res.sendFile(path.join(__dirname, 'dist/index.html'));
-    // });
-//production mode
-//develope stage useless code
+app.use(express.static(path.join(__dirname, 'dist')));
+app.get('/', (req, res) => {
+      res.sendFile(path.join(__dirname, 'dist/index.html'));
+    });
+// production mode
+// develope stage useless code
 // app.get('/*', (req, res) => {
 //     res.sendFile(path.join(__dirname,'../react/src', 'index.html'));
 // });
