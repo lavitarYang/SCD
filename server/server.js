@@ -88,7 +88,7 @@ app.post("/post/video",upload.single('video'),async(req,res)=>{
             res.send('Python script has finished executing.');
             //convert ffmpeg
              try{
-                ffmpeg(target)
+                await ffmpeg(target)
                 .videoCodec('libx264')
                 .outputOptions('-crf 20')
                 .on('error', (err) => {console.log(`An error occurred: ${err.message}`);})
