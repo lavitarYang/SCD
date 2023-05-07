@@ -111,7 +111,7 @@ app.post("/post/video",upload.single('video'),async(req,res)=>{
                         console.log('sent do mongodb')
                         await awsKey.create({awsKey:validName,ID:Id})
                     } catch (error) {console.error(error);}
-                });
+                })
                 .save(`${outputPath}`);
              }catch (erroe){
                 console.error(error);
