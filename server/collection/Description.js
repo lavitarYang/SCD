@@ -13,18 +13,8 @@ const schema = mongoose.Schema(
             type:String,
             default:""
         },
-        MLtimestamp:{
-            type:{
-                boobs:{
-                    type:String,
-                    default:""
-                },
-                butt:{
-                    type:String,
-                    default:""
-                }
-            }
-        }
+        key1: { type: mongoose.Schema.Types.Mixed },
+        key2: { type: mongoose.Schema.Types.Mixed }, 
     }
 )
 const Description = mongoose.model("description",schema);

@@ -5,8 +5,6 @@ import glob as glob
 import os
 import time
 import argparse
-import yaml
-import matplotlib.pyplot as plt
 import json
 
 from models.create_fasterrcnn_model import create_model
@@ -35,15 +33,13 @@ def parse_opt():
     args = vars(parser.parse_args())
     return args
 
-def main(args):
-
+def main(args):   
     DEVICE = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
     
-
     #state dict have all train log including some config file
     #and trained weights which are not in structure need to 
     #load into architecture later
-    checkpoint = torch.load("outputs/training/fasterrcnn_resnet50_fpn_v2_sense/best_model.pth", map_location=DEVICE)
+    checkpoint = torch.load("/home/ubuntu/project/SCD/fasterRcnn/outputs/training/fasterrcnn_resnet50_fpn_v2_sense/best_model.pth", map_location=DEVICE)
     NUM_CLASSES = checkpoint['config']['NC']
     CLASSES = checkpoint['config']['CLASSES']
 
