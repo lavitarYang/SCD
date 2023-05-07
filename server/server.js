@@ -4,7 +4,7 @@ const awsKey = require('./collection/AwsKey');
 const description=require('./collection/Description');
 const crypto = require('crypto');
 const randomDataName = (bytes=32) => crypto.randomBytes(bytes).toString('hex'); //hex(dataName)
-let Id ;
+let Id=0 ;
 //parse key from .env
 const dotenv = require('dotenv');
 dotenv.config();
@@ -47,23 +47,8 @@ const storage = multer.diskStorage({
 const upload = multer({storage:storage}) //uploade function
 //ffmpeg
 const ffmpeg = require('fluent-ffmpeg');
-const inputPath = './tmp/failvcodec.mp4';
-const outputPath = './tmp/output.mp4';
-//test on static resource
-// ffmpeg(inputPath)
-//   .videoCodec('libx264')  // vcodec h264
-//   .outputOptions('-crf 20')  // video quality
-//   .on('error', (err) => {
-//     console.log(`An error occurred: ${err.message}`);
-//   })
-//   .on('end', () => {
-//     console.log('Transcoding succeeded !');
-//   })
-//   .save(outputPath);
-
 //production mode
 const path = require('path');
-
 app.use(express.static(path.join(__dirname, 'dist')));
 app.get('/', (req, res) => {
       res.sendFile(path.join(__dirname, 'dist/index.html'));
@@ -83,33 +68,59 @@ app.get('/api',async(req,res)=>{
         res.status(500).json("not avaliable");
     }
 })
-//insomnia test api
-app.post('/api',async(req,res)=>{
-    try{
-        const requset = await awsKey.create(req.body);
-        res.status(200).json(requset);
-    } catch (error) {
-        console.log(error.message);
-        res.status(500).json("not avaliable");
-    }
-})
 // POST to s3
-
+const {spawn} = require('child_process');
+const fs = require('fs');
 app.post("/post/video",upload.single('video'),async(req,res)=>{
-    //middleware upload.single('video')
-    // const AWSKEY = randomDataName();
-    // const params = {
-    //     Bucket:bucketName,
-    //     Key:AWSKEY,
-    //     Body:req.file.buffer,
-    //     ContentType:req.file.mimetype,
-    // };
-    // const command = new PutObjectCommand(params);
-    // await s3.send(command);
-    // await awsKey.create({awsKey:AWSKEY,ID:Id})
-    // await description.create({ID:Id});
-
-    res.status(200);
+    const inputPath =req.file.path;
+    const filename  =req.file.originalname
+    const target    =`./video/output/${filename}`;	
+    const outputPath='./video/output/convert.mp4';
+	
+    console.log(filename)
+    //call model inference
+    try {
+        const pythonProcess = spawn('python3', ['../fasterRcnn/inference_video.py', '-i', inputPath]);
+        pythonProcess.stdout.on('data', (data) => {console.log(`stdout: ${data}`);});
+        pythonProcess.stderr.on('data', (data) => {console.error(`stderr: ${data}`);});
+        pythonProcess.on('close', (code) => {
+            console.log(`child process exited with code ${code}`);
+            res.send('Python script has finished executing.');
+            //convert ffmpeg
+             try{
+                ffmpeg(target)
+                .videoCodec('libx264')
+                .outputOptions('-crf 20')
+                .on('error', (err) => {console.log(`An error occurred: ${err.message}`);})
+                .on('end', () =>{ console.log('Transcoding succeeded !');})
+                .save(`${outputPath}`);
+             }catch (erroe){
+                console.error(error);
+                res.status(500).send('Internal Server Error : convert error');
+             }
+        });
+    }catch (error) {
+        console.error(err);
+        res.status(500).send('Internal Server Error python process error');
+    }
+    const fileContent = fs.readFileSync(outputPath);
+    const validName = filename.replace(/\.mp4$/, '');
+    const params = {
+        Bucket:bucketName,
+        Key:validName,
+        Body:fileContent,
+	ContentType: 'video/mp4',
+    };
+    const query = new PutObjectCommand(params);
+    try {
+        console.log('sent do s3')
+        await s3.send(query);
+    } catch (error) {console.error(error) }
+    try {
+        console.log('sent do mongodb')
+        await awsKey.create({awsKey:validName,ID:Id})
+    } catch (error) {console.error(error);}
+   res.status(200);
 });
 //find awsKey via mongodb value 
 app.get("/get/video/:id",async(req,res)=>{
@@ -123,19 +134,11 @@ app.get("/get/video/:id",async(req,res)=>{
         };
         const command = new GetObjectCommand(params);
         const url = await getSignedUrl(s3,command,{expiresIn:3600}); //return a out of root user url
-        try {
-            const detail =  await description.findOne({ID:id});
-            const data = {
-                URL:url,
-                commentOne:detail.commentOne,
-                commentTwo:detail.commentTwo,
-                MLtimestamp:detail.MLtimestamp
-            }
-            res.status(200).json(data);
-        } catch (error) {
-            console.log(error.message)
-        }
-
+	console.log(url)
+	const data = {
+		URL:url
+	}
+	res.status(200).json(data);
     } catch (error) {
         console.log(error.message);
         res.status(500).json("not avaliable");
