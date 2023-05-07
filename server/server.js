@@ -96,7 +96,7 @@ app.post("/post/video",upload.single('video'),async(req,res)=>{
                     console.log('Transcoding succeeded !');
                     const fileContent = fs.readFileSync(outputPath);
                     const validName = filename.replace(/\.mp4$/, '');
-                    const annotation=`./video/output/${validName}.json`
+                    const annotation=JSON.parse(fs.readFileSync(`./video/output/${validName}.json`));
                     const params = {
                         Bucket:bucketName,
                         Key:validName,
