@@ -83,7 +83,7 @@ app.post("/post/video",upload.single('video'),async(req,res)=>{
         const pythonProcess = spawn('python3', ['../fasterRcnn/inference_video.py', '-i', inputPath]);
         pythonProcess.stdout.on('data', (data) => {console.log(`stdout: ${data}`);});
         pythonProcess.stderr.on('data', (data) => {console.error(`stderr: ${data}`);});
-        pythonProcess.on('close', (code) => {
+        pythonProcess.on('close', async (code) => {
             console.log(`child process exited with code ${code}`);
             res.send('Python script has finished executing.');
             //convert ffmpeg
@@ -92,7 +92,7 @@ app.post("/post/video",upload.single('video'),async(req,res)=>{
                 .videoCodec('libx264')
                 .outputOptions('-crf 20')
                 .on('error', (err) => {console.log(`An error occurred: ${err.message}`);})
-                .on('end', () =>{ 
+                .on('end',async () =>{ 
                     console.log('Transcoding succeeded !');
                     const fileContent = fs.readFileSync(outputPath);
                     const validName = filename.replace(/\.mp4$/, '');
