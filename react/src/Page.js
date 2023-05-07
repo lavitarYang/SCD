@@ -45,8 +45,10 @@ export default function Page(){
             </div>
             <div className='RightColumn'>
               <div className='Description'>
+                {cospondVideo.NAME}
               </div>
               <div className='TimeStemp'>
+                {cospondVideo.key1}
               </div>
             </div>
           </div>

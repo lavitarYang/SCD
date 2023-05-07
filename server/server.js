@@ -135,7 +135,8 @@ app.post("/post/video",upload.single('video'),async(req,res)=>{
 app.get("/get/video/:id",async(req,res)=>{
     const {id} = req.params;
     try {
-        const response = await awsKey.findOne({ID:id})
+        const response = await awsKey.findOne({ID:id});
+        const meta     = await description.findOne({ID:id}); 
         //I accidentally reuse property name with collection name :O
         const params = {
             Bucket:bucketName,
@@ -145,7 +146,10 @@ app.get("/get/video/:id",async(req,res)=>{
         const url = await getSignedUrl(s3,command,{expiresIn:3600}); //return a out of root user url
 	console.log(url)
 	const data = {
-		URL:url
+        NAME:response.awsKey,
+		URL:url,
+        KEY1:meta.key1,
+        KEY2:meta.key2
 	}
 	res.status(200).json(data);
     } catch (error) {
