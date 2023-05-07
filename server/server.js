@@ -38,7 +38,7 @@ app.use(
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, './video')
+    cb(null, './video/input')
   },
   filename: function (req, file, cb) {
     cb(null, file.originalname)
