@@ -45,10 +45,10 @@ export default function Page(){
             </div>
             <div className='RightColumn'>
               <div className='Description'>
-                {cospondVideo.NAME}
+                <h1>name:{cospondVideo.NAME}</h1>
               </div>
               <div className='TimeStemp'>
-                {cospondVideo.key1}
+              <h1>name:{cospondVideo.key1}</h1>
               </div>
             </div>
           </div>
