@@ -96,6 +96,7 @@ app.post("/post/video",upload.single('video'),async(req,res)=>{
                     console.log('Transcoding succeeded !');
                     const fileContent = fs.readFileSync(outputPath);
                     const validName = filename.replace(/\.mp4$/, '');
+                    const annotation=`./video/output/${validName}.json`
                     const params = {
                         Bucket:bucketName,
                         Key:validName,
@@ -108,9 +109,15 @@ app.post("/post/video",upload.single('video'),async(req,res)=>{
                         await s3.send(query);
                     } catch (error) {console.error(error) }
                     try {
-                        console.log('sent do mongodb')
+                        console.log(`sent ${validName} do mongodb`)
                         await awsKey.create({awsKey:validName,ID:Id})
                     } catch (error) {console.error(error);}
+                    try {
+                        console.log(`sent discription  do mongodb`)
+                        await description.create({ID:Id,key1:annotation.boobs,key2:annotation.butt})
+                    } catch (error) {
+                        
+                    }
                 })
                 .save(`${outputPath}`);
              }catch (erroe){
