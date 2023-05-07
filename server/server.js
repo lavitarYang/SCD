@@ -92,7 +92,26 @@ app.post("/post/video",upload.single('video'),async(req,res)=>{
                 .videoCodec('libx264')
                 .outputOptions('-crf 20')
                 .on('error', (err) => {console.log(`An error occurred: ${err.message}`);})
-                .on('end', () =>{ console.log('Transcoding succeeded !');})
+                .on('end', () =>{ 
+                    console.log('Transcoding succeeded !');
+                    const fileContent = fs.readFileSync(outputPath);
+                    const validName = filename.replace(/\.mp4$/, '');
+                    const params = {
+                        Bucket:bucketName,
+                        Key:validName,
+                        Body:fileContent,
+                    ContentType: 'video/mp4',
+                    };
+                    const query = new PutObjectCommand(params);
+                    try {
+                        console.log('sent do s3')
+                        await s3.send(query);
+                    } catch (error) {console.error(error) }
+                    try {
+                        console.log('sent do mongodb')
+                        await awsKey.create({awsKey:validName,ID:Id})
+                    } catch (error) {console.error(error);}
+                });
                 .save(`${outputPath}`);
              }catch (erroe){
                 console.error(error);
@@ -103,23 +122,6 @@ app.post("/post/video",upload.single('video'),async(req,res)=>{
         console.error(err);
         res.status(500).send('Internal Server Error python process error');
     }
-    const fileContent = fs.readFileSync(outputPath);
-    const validName = filename.replace(/\.mp4$/, '');
-    const params = {
-        Bucket:bucketName,
-        Key:validName,
-        Body:fileContent,
-	ContentType: 'video/mp4',
-    };
-    const query = new PutObjectCommand(params);
-    try {
-        console.log('sent do s3')
-        await s3.send(query);
-    } catch (error) {console.error(error) }
-    try {
-        console.log('sent do mongodb')
-        await awsKey.create({awsKey:validName,ID:Id})
-    } catch (error) {console.error(error);}
    res.status(200);
 });
 //find awsKey via mongodb value 
