@@ -10,7 +10,7 @@ export default function Video({video}) {
       </div>
       <div className="right">
         <div className="detail">
-          <h3 align="center">Title{video.ID}</h3>
+          <h3 align="center">Title:{video.ID}</h3>
           <p align="center">const description</p>
         </div>
       </div>
