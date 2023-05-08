@@ -5,15 +5,22 @@ import { useParams } from 'react-router-dom';
 import NavBar from "./NavBar";
 export default function Page(){
     const {id} = useParams();
-    const [cospondVideo,setcospondVideo] = useState([])
+    const [cospondVideo,setcospondVideo] = useState([]);
+    const [timeRanges1, setTimeRanges1] = useState([]);
+    const [timeRanges2, setTimeRanges2] = useState([]);
     useEffect(() => {
       fetch(`/get/video/${id}`)
       .then(response => response.json())
-      .then(data => setcospondVideo(data))
+      .then(data => {
+        setcospondVideo(data);
+        setTimeRanges1(formatTimeRanges(data.KEY1));
+        setTimeRanges2(formatTimeRanges(data.KEY2));
+      })
       .then(console.log("successful"))
+      .catch(error =>console.error(error))
     },[id]);
     const [inputValue, setInputValue] = useState('');
-
+    //for comment
     function handleChange(event) {
       setInputValue(event.target.value);
     }
@@ -29,15 +36,31 @@ export default function Page(){
         .then(response => response.json())
         .catch(error => console.error(error));
     }
+    //convert timeline
+    function formatTimeRanges(timeRanges) {
+      const timeFormat = (time) => {
+        const hours = Math.floor(time / 60).toString().padStart(2, '0');
+        const minutes = (time % 60).toString().padStart(2, '0');
+        return `${hours}:${minutes}`;
+      };
+  
+      const formattedRanges = timeRanges.map(([start, end]) => {
+        const formattedStart = timeFormat(start);
+        const formattedEnd = timeFormat(end);
+        return `${formattedStart}~${formattedEnd}`;
+      });
+  
+      return formattedRanges;
+    }
     return(
       <> 
         <NavBar/>
-        <h1 align="center">
+        {/* <h1 align="center">
           This is view page {id} <br/>
           <a href = {cospondVideo.URL}>
             video
           </a>
-        </h1>
+        </h1> */}
         <div className='PageContainer'>
           <div className='WatchSection'>
             <div className='Player'>
@@ -45,11 +68,10 @@ export default function Page(){
             </div>
             <div className='RightColumn'>
               <div className='Description'>
-                <h1>name:{cospondVideo.NAME}</h1>
+                <h1>video name:{cospondVideo.NAME}</h1>
               </div>
               <div className='TimeStemp'>
-              <h1>boobs:{cospondVideo.KEY1}</h1>
-              <h1>butt :{cospondVideo.KEY2}</h1>
+              {cospondVideo.commentTwo}  
               </div>
             </div>
           </div>
@@ -61,10 +83,18 @@ export default function Page(){
               </form>
             </div>
             <div className='Administration '>
-              {cospondVideo.commentTwo}  
+            <h1>boobs:</h1>
+            <ul>
+              {timeRanges1.map((range, index) => (
+              <li key={index}>{range}</li>))}
+            </ul>
+            <h1>butt:</h1>
+            <ul>
+              {timeRanges2.map((range, index) => (
+              <li key={index}>{range}</li>))}
+            </ul>
             </div>
           </div>
-  
         </div>
       </>
     );

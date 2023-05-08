@@ -149,7 +149,8 @@ app.get("/get/video/:id",async(req,res)=>{
         NAME:response.awsKey,
 		URL:url,
         KEY1:meta.key1,
-        KEY2:meta.key2
+        KEY2:meta.key2,
+        commentTwo:meta.commentTwo
 	}
 	res.status(200).json(data);
     } catch (error) {
