@@ -48,7 +48,8 @@ export default function Page(){
                 <h1>name:{cospondVideo.NAME}</h1>
               </div>
               <div className='TimeStemp'>
-              <h1>name:{cospondVideo.key1}</h1>
+              <h1>boobs:{cospondVideo.KEY1}</h1>
+              <h1>butt :{cospondVideo.KEY2}</h1>
               </div>
             </div>
           </div>
